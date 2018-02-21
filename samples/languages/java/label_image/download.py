@@ -65,8 +65,8 @@ def patch_graph():
   with tf.Graph().as_default() as g:
     input_image, image_normalized = create_graph_to_decode_and_normalize_image()
     original_graph_def = tf.GraphDef()
-    with open(os.path.join(LOCAL_DIR, 'graph.pb')) as f:
-      original_graph_def.ParseFromString(f.read())
+    with open(os.path.join(LOCAL_DIR, 'graph.pb'), 'rb') as f:
+      original_graph_def.ParseFromString(f.read(), )
     softmax = tf.import_graph_def(
         original_graph_def,
         name='inception',
@@ -77,7 +77,7 @@ def patch_graph():
     # probabilities, instead of a batch of vectors with batch size 1.
     output_probabilities = tf.squeeze(softmax, name='probabilities')
     # Overwrite the graph.
-    with open(os.path.join(LOCAL_DIR, 'graph.pb'), 'w') as f:
+    with open(os.path.join(LOCAL_DIR, 'graph.pb'), 'wb') as f:
       f.write(g.as_graph_def().SerializeToString())
     print('------------------------------------------------------------')
     print('MODEL GRAPH  : graph.pb')
