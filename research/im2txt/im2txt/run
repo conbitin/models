@@ -1,0 +1,5 @@
+#!/bin/bash
+CHECKPOINT_PATH="$(pwd)\test\model2.ckpt-3000000"
+VOCAB_FILE="$(pwd)\test\word_counts.txt"
+IMAGE_FILE="$(pwd)\test\images.jpg"
+python run_inference.py --checkpoint_path=${CHECKPOINT_PATH} --vocab_file=${VOCAB_FILE} --input_files=${IMAGE_FILE}
